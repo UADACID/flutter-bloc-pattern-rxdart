@@ -10,14 +10,26 @@ class CounterPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('BLoC Pattern'),
       ),
-      body: Center(
-        child: StreamBuilder(
-          stream: bloc.outCounter,
-          initialData: 0,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return Text('you tap me ${snapshot.data}');
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Center(
+            child: StreamBuilder(
+              stream: bloc.outCounter,
+              initialData: 0,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                return Text('you tap me ${snapshot.data}');
+              },
+            ),
+          ),
+          RaisedButton(
+            child: Text('check tap counter on other page'),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) => Test()));
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -32,9 +44,19 @@ class CounterPage extends StatelessWidget {
 class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final IncrementBloc bloc = BlocProvider.of<IncrementBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Test'),
+      ),
+      body: Center(
+        child: StreamBuilder(
+          stream: bloc.outCounter,
+          initialData: 0,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Text('you tap me ${snapshot.data}');
+          },
+        ),
       ),
     );
   }
