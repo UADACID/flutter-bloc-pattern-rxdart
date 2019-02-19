@@ -49,14 +49,25 @@ class Test extends StatelessWidget {
       appBar: AppBar(
         title: Text('Test'),
       ),
-      body: Center(
-        child: StreamBuilder(
-          stream: bloc.outCounter,
-          initialData: 0,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return Text('you tap me ${snapshot.data}');
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Center(
+            child: StreamBuilder(
+              stream: bloc.outCounter,
+              initialData: 0,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                return Text('you tap me ${snapshot.data}');
+              },
+            ),
+          ),
+          RaisedButton(
+            child: Text('reset counter'),
+            onPressed: () {
+              bloc.resetCounter.add('hello');
+            },
+          )
+        ],
       ),
     );
   }

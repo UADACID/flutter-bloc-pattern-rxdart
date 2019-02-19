@@ -11,13 +11,18 @@ class IncrementBloc implements BlocBase {
   StreamSink<int> get _inAdd => _counterController.sink;
   ValueObservable<int> get outCounter => _counterController.stream;
 
-  // Stream to handle the action on the counter
-  StreamController _actionController = BehaviorSubject();
-  StreamSink get incrementCounter => _actionController;
+  // Stream to handle the incrementaction on the counter
+  StreamController _actionIncrementController = BehaviorSubject();
+  StreamSink get incrementCounter => _actionIncrementController;
+
+  // Stream to handle the resetaction on the counter
+  StreamController _actionResetController = BehaviorSubject();
+  StreamSink get resetCounter => _actionResetController;
 
   IncrementBloc() {
     _counter = 0;
-    _actionController.stream.listen(_handleLogic);
+    _actionIncrementController.stream.listen(_handleLogic);
+    _actionResetController.stream.listen(_logicReset);
   }
 
   void _handleLogic(data) {
@@ -25,8 +30,14 @@ class IncrementBloc implements BlocBase {
     _inAdd.add(_counter);
   }
 
+  void _logicReset(data) {
+    _counter = 0;
+    _inAdd.add(_counter);
+  }
+
   void dispose() {
-    _actionController.close();
+    _actionIncrementController.close();
     _counterController.close();
+    _actionResetController.close();
   }
 }
