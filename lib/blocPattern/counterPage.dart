@@ -65,6 +65,8 @@ class Test extends StatelessWidget {
             child: Text('reset counter'),
             onPressed: () {
               bloc.resetCounter.add('hello');
+              Future.delayed(
+                  Duration(milliseconds: 500), () => Navigator.pop(context));
             },
           )
         ],

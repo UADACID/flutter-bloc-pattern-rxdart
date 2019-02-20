@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rx_bloc/blocPattern/blocBase.dart';
 
+// semua yang ada di sini merupakan standar blocProvider
+
 class BlocProvider<T extends BlocBase> extends StatefulWidget {
   final T bloc;
   final Widget child;
